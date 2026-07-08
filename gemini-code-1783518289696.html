@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en" style="scroll-behavior: smooth;">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EigenEdge Tutoring</title>
+    <style>
+        :root {
+            --primary-color: #0b1a30; 
+            --secondary-color: #4facfe;
+            --accent-color: #00f2fe;
+            --text-color: #e2e8f0;
+            --glass-bg: rgba(255, 255, 255, 0.08);
+            --glass-border: rgba(255, 255, 255, 0.15);
+        }
+
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Moving Background Animation */
+        .background-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -2;
+            background-image: url('WhatsApp Image 2026-07-07 at 4.35.19 PM.jpeg');
+            background-size: cover;
+            background-position: center;
+            animation: moveSky 30s linear infinite alternate;
+        }
+
+        @keyframes moveSky {
+            0% { transform: scale(1); background-position: 0% 50%; }
+            100% { transform: scale(1.1); background-position: 100% 50%; }
+        }
+
+        /* Shooting Stars */
+        .shooting-star {
+            position: fixed;
+            z-index: -1;
+            width: 150px;
+            height: 2px;
+            background: linear-gradient(90deg, rgba(255,255,255,1) 0%, rgba(255,255,255,0) 100%);
+            border-radius: 999px;
+            filter: drop-shadow(0 0 6px white);
+            animation: shoot 5s linear infinite;
+            opacity: 0;
+        }
+
+        .star1 { top: 10%; left: -10%; animation-delay: 0s; }
+        .star2 { top: 30%; left: -10%; animation-delay: 2.5s; }
+        .star3 { top: 15%; left: 40%; animation-delay: 4s; }
+
+        @keyframes shoot {
+            0% { transform: translateX(0) translateY(0) rotate(-35deg); opacity: 1; }
+            20% { transform: translateX(100vw) translateY(100vh) rotate(-35deg); opacity: 0; }
+            100% { opacity: 0; }
+        }
+
+        /* Top Navigation Bar */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 4rem;
+            background: linear-gradient(to bottom, rgba(11,26,48,0.95), transparent);
+            z-index: 100;
+            box-sizing: border-box;
+        }
+
+        .nav-logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: white;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .nav-logo span {
+            color: var(--secondary-color);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+        }
+
+        .nav-links a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: white;
+        }
+
+        .nav-cta {
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            padding: 0.6rem 1.5rem;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: all 0.3s;
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .nav-cta:hover {
+            background: rgba(79, 172, 254, 0.2);
+            border-color: var(--secondary-color);
+        }
+
+        /* Main Content Container */
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 8rem 2rem 4rem; /* Top padding to account for fixed nav */
+        }
+
+        /* Section Styling */
+        .section-wrapper {
+            margin-bottom: 5rem;
+            padding-top: 4rem; /* Anchor offset for smooth scrolling */
+            margin-top: -4rem;
+        }
+
+        h2 {
+            font-size: 2.2rem;
+            color: white;
+            margin-bottom: 1.5rem;
+            font-weight: bold;
+        }
+
+        h2 span {
+            color: var(--accent-color);
+        }
+
+        /* Glassmorphism Tiles / Cards */
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+            gap: 2rem;
+        }
+
+        .card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            padding: 2.5rem;
+            border-radius: 16px;
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Hover Effect */
+        .card:hover {
+            transform: translateY(-8px) scale(1.01);
+            background: rgba(255, 255, 255, 0.12);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+            border-color: rgba(79, 172, 254, 0.4);
+            cursor: pointer;
+        }
+
+        .card h3 {
+            color: var(--accent-color);
+            margin-top: 0;
+            margin-bottom: 1rem;
+            font-size: 1.4rem;
+        }
+
+        .card strong {
+            color: white;
+        }
+
+        .card ul {
+            padding-left: 1.2rem;
+            margin-top: 1rem;
+        }
+
+        .card li {
+            margin-bottom: 0.8rem;
+            color: rgba(255, 255, 255, 0.85);
+        }
+
+        /* Pricing Specific Styles */
+        .price {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: white;
+            margin: 1rem 0;
+            text-shadow: 0 0 10px rgba(79, 172, 254, 0.5);
+        }
+
+        footer {
+            text-align: center;
+            padding: 3rem 2rem;
+            background: rgba(11, 26, 48, 0.8);
+            backdrop-filter: blur(10px);
+            border-top: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .contact {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: var(--secondary-color);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Moving Background & Stars -->
+    <div class="background-container"></div>
+    <div class="shooting-star star1"></div>
+    <div class="shooting-star star2"></div>
+    <div class="shooting-star star3"></div>
+
+    <!-- Top Navigation Bar -->
+    <nav>
+        <a href="#" class="nav-logo">EigenEdge<span>.</span></a>
+        <div class="nav-links">
+            <a href="#overview">Overview</a>
+            <a href="#philosophy">Philosophy</a>
+            <a href="#services">Services</a>
+            <a href="#scheduling">Scheduling</a>
+            <a href="#pricing">Pricing</a>
+        </div>
+        <a href="#overview" class="nav-cta">Get started</a>
+    </nav>
+
+    <div class="container">
+        
+        <!-- Section 1: Overview -->
+        <div id="overview" class="section-wrapper">
+            <h2>Lead Tutor <span>Overview</span></h2>
+            <div class="card-grid">
+                <div class="card">
+                    <h3>Andrea Muhuli</h3>
+                    <p><strong>Academic Status:</strong> 2nd Year BSc Mathematical Statistics (University of Pretoria)</p>
+                    <p>Andrea is a dedicated academic mentor with a strong foundation in university-level mathematics and statistics. Beyond personal academic success, Andrea holds key leadership roles that demonstrate reliability and a passion for teaching.</p>
+                </div>
+                <div class="card">
+                    <h3>Leadership & Mentorship</h3>
+                    <ul>
+                        <li><strong>Tuks Village Mentor:</strong> Providing academic and personal guidance within the university residence system.</li>
+                        <li><strong>STARS Mentorship Programme:</strong> A dedicated mentor assisting first-year students in mastering rigorous university requirements.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 2: Philosophy -->
+        <div id="philosophy" class="section-wrapper">
+            <h2>Our Tutoring <span>Philosophy</span></h2>
+            <div class="card-grid">
+                <div class="card">
+                    <h3>Beyond Memorization</h3>
+                    <p>At EigenEdge, we move beyond rote memorization. We specialize in transforming abstract numbers into logical, manageable concepts.</p>
+                    <ul>
+                        <li><strong>Creative Mnemonics:</strong> We use memorable acronyms and rhymes to help students recall complex formulas during high-pressure exams.</li>
+                        <li><strong>Past Paper Mastery:</strong> We focus on solving previous exam papers to build "exam stamina" and familiarize students with specific question phrasing.</li>
+                        <li><strong>Logical Intuition:</strong> We teach the <em>why</em> behind the math, ensuring students can solve unfamiliar problems independently.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 3: Services -->
+        <div id="services" class="section-wrapper">
+            <h2>Service <span>Delivery</span></h2>
+            <div class="card-grid">
+                <div class="card">
+                    <h3>Modern Learning Technology</h3>
+                    <p>We utilize modern technology to ensure online learning is interactive and engaging.</p>
+                    <ul>
+                        <li><strong>Format:</strong> One-on-one online sessions via Zoom or Google Meet.</li>
+                        <li><strong>Real-Time Tablet Integration:</strong> Using a professional Tablet & Stylus (iPad), I write out problems by hand just like a real teacher on a chalkboard. Students see every step appear instantly on their screen.</li>
+                        <li><strong>Revision Resources:</strong> After every lesson, a PDF summary of the handwritten notes is generated and sent to the student for their revision records.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 4: Scheduling -->
+        <div id="scheduling" class="section-wrapper">
+            <h2>Frequency & <span>Scheduling</span></h2>
+            <div class="card-grid">
+                <div class="card">
+                    <h3>Flexible Timetables</h3>
+                    <p>We offer flexible schedules tailored to the student's current needs:</p>
+                    <ul>
+                        <li><strong>Standard Mastery (1 Session/Week):</strong> Ideal for steady progress and staying on top of the curriculum.</li>
+                        <li><strong>Exam Intensive (2+ Sessions/Week):</strong> Recommended during test weeks or for students needing to catch up quickly on missed concepts.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 5: Pricing -->
+        <div id="pricing" class="section-wrapper">
+            <h2>Pricing & <span>Investment</span></h2>
+            <div class="card-grid" style="grid-template-columns: 1fr;">
+                <div class="card" style="text-align: center;">
+                    <h3>Student Support Guarantee</h3>
+                    <div class="price">R200 per session</div>
+                    <p style="max-width: 700px; margin: 0 auto; color: rgba(255,255,255,0.8);">
+                        I am committed to student success above all else. If I note that a student requires significantly more time or intensive intervention to succeed, rates can be discussed and adjusted. My goal is to ensure support remains sustainable and accessible for the family.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <footer>
+        <div class="contact">
+            Contact Andrea Muhuli<br>
+            EigenEdge Tutoring
+        </div>
+        <p style="margin-top: 1rem; font-size: 0.9rem; color: rgba(255,255,255,0.4);">&copy; 2026 EigenEdge Tutoring. All rights reserved.</p>
+    </footer>
+
+</body>
+</html>
